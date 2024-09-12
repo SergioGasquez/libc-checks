@@ -59,29 +59,18 @@ macro_rules! check_types {
 }
 
 fn main() {
-    // It is necessary to call this function once. Otherwise some patches to the runtime
-    // implemented by esp-idf-sys might not link properly. See https://github.com/esp-rs/esp-idf-template/issues/71
     esp_idf_svc::sys::link_patches();
-
-    // // Bind the log crate to the ESP Logging facilities
     esp_idf_svc::log::EspLogger::initialize_default();
 
-    // newlib/espidf module
-
+    // newlib/espidf module (https://github.com/rust-lang/libc/blob/main/src/unix/newlib/espidf/mod.rs)
     check_types!(clock_t);
     check_types!(cmsghdr);
     check_types!(msghdr);
-    // check_types!(sockaddr_un);
     check_types!(sockaddr);
     check_types!(sockaddr_in6);
     check_types!(sockaddr_in);
     check_types!(sockaddr_storage);
-
-    // check_constants!(AF_UNIX);
     check_constants!(AF_INET6);
-
-    // check_constants!(FIONBIO);
-
     check_constants!(POLLIN);
     check_constants!(POLLRDNORM);
     check_constants!(POLLRDBAND);
@@ -91,9 +80,7 @@ fn main() {
     check_constants!(POLLWRBAND);
     check_constants!(POLLERR);
     check_constants!(POLLHUP);
-
     check_constants!(SOL_SOCKET);
-
     check_constants!(MSG_OOB);
     check_constants!(MSG_PEEK);
     check_constants!(MSG_DONTWAIT);
@@ -104,9 +91,7 @@ fn main() {
     check_constants!(MSG_TRUNC);
     check_constants!(MSG_CTRUNC);
     check_constants!(MSG_EOR);
-
     check_constants!(PTHREAD_STACK_MIN);
-
     check_constants!(SIGABRT);
     check_constants!(SIGFPE);
     check_constants!(SIGILL);
@@ -117,7 +102,7 @@ fn main() {
     check_constants!(SIGQUIT);
     check_constants!(NSIG);
 
-    // newlib module
+    // newlib module (https://github.com/rust-lang/libc/blob/main/src/unix/newlib/mod.rs)
     check_types!(blkcnt_t);
     check_types!(blksize_t);
     check_types!(clockid_t);
@@ -140,7 +125,6 @@ fn main() {
     check_types!(nlink_t);
     check_types!(pthread_t);
     check_types!(pthread_key_t);
-    // check_types!(rlim_t);
     check_types!(sa_family_t);
     check_types!(socklen_t);
     check_types!(speed_t);
@@ -154,29 +138,17 @@ fn main() {
     check_types!(linger);
     check_types!(in_addr);
     check_types!(pollfd);
-    // check_types!(lconv);
     check_types!(tm);
-    // check_types!(statvfs);
     check_types!(sigaction);
     check_types!(stack_t);
     check_types!(fd_set);
-    // check_types!(passwd);
     check_types!(termios);
-    // check_types!(sem_t);
-    // check_types!(Dl_info);
-    // check_types!(utsname);
-    // check_types!(cpu_set_t);
     check_types!(pthread_attr_t);
-    // check_types!(pthread_rwlockattr_t);
-
     check_constants!(NCCS);
-
     check_constants!(PTHREAD_MUTEX_NORMAL);
     check_constants!(PTHREAD_MUTEX_RECURSIVE);
     check_constants!(PTHREAD_MUTEX_ERRORCHECK);
-
     check_constants!(FD_SETSIZE);
-
     check_constants!(EPERM);
     check_constants!(ENOENT);
     check_constants!(ESRCH);
@@ -262,7 +234,6 @@ fn main() {
     check_constants!(ENOTRECOVERABLE);
     check_constants!(EOWNERDEAD);
     check_constants!(EWOULDBLOCK);
-
     check_constants!(F_DUPFD);
     check_constants!(F_GETFD);
     check_constants!(F_SETFD);
@@ -278,7 +249,6 @@ fn main() {
     check_constants!(F_CNVT);
     check_constants!(F_RSETLKW);
     check_constants!(F_DUPFD_CLOEXEC);
-
     check_constants!(O_RDONLY);
     check_constants!(O_WRONLY);
     check_constants!(O_RDWR);
@@ -288,23 +258,13 @@ fn main() {
     check_constants!(O_EXCL);
     check_constants!(O_SYNC);
     check_constants!(O_NONBLOCK);
-
-    // check_constants!(O_ACCMODE);
     check_constants!(O_CLOEXEC);
-
-    // check_constants!(RTLD_LAZY);
-
     check_constants!(STDIN_FILENO);
     check_constants!(STDOUT_FILENO);
     check_constants!(STDERR_FILENO);
-
     check_constants!(SEEK_SET);
     check_constants!(SEEK_CUR);
     check_constants!(SEEK_END);
-
-    // check_constants!(FIOCLEX);
-    // check_constants!(FIONCLEX);
-
     check_constants!(S_BLKSIZE);
     check_constants!(S_IREAD);
     check_constants!(S_IWRITE);
@@ -327,41 +287,16 @@ fn main() {
     check_constants!(S_IROTH);
     check_constants!(S_IWOTH);
     check_constants!(S_IXOTH);
-
-    // check_constants!(SOL_TCP);
-
     check_constants!(PF_UNSPEC);
     check_constants!(PF_INET);
     check_constants!(PF_INET6);
-
     check_constants!(AF_UNSPEC);
     check_constants!(AF_INET);
-
-    // check_constants!(CLOCK_REALTIME);
-    // check_constants!(CLOCK_MONOTONIC);
-    // check_constants!(CLOCK_BOOTTIME);
-
     check_constants!(SOCK_STREAM);
     check_constants!(SOCK_DGRAM);
-
     check_constants!(SHUT_RD);
     check_constants!(SHUT_WR);
     check_constants!(SHUT_RDWR);
-
-    // check_constants!(SO_BINTIME);
-    // check_constants!(SO_NO_OFFLOAD);
-    // check_constants!(SO_NO_DDP);
-    // check_constants!(SO_REUSEPORT_LB);
-    // check_constants!(SO_LABEL);
-    // check_constants!(SO_PEERLABEL);
-    // check_constants!(SO_LISTENQLIMIT);
-    // check_constants!(SO_LISTENQLEN);
-    // check_constants!(SO_LISTENINCQLEN);
-    // check_constants!(SO_SETFIB);
-    // check_constants!(SO_USER_COOKIE);
-    // check_constants!(SO_PROTOCOL);
-    // check_constants!(SO_PROTOTYPE);
-    // check_constants!(SO_VENDOR);
     check_constants!(SO_DEBUG);
     check_constants!(SO_ACCEPTCONN);
     check_constants!(SO_REUSEADDR);
@@ -372,61 +307,27 @@ fn main() {
     check_constants!(SO_LINGER);
     check_constants!(SO_OOBINLINE);
     check_constants!(SO_REUSEPORT);
-    // check_constants!(SO_TIMESTAMP);
-    // check_constants!(SO_NOSIGPIPE);
-    // check_constants!(SO_ACCEPTFILTER);
     check_constants!(SO_SNDBUF);
     check_constants!(SO_RCVBUF);
     check_constants!(SO_SNDLOWAT);
     check_constants!(SO_RCVLOWAT);
     check_constants!(SO_SNDTIMEO);
     check_constants!(SO_RCVTIMEO);
-
     check_constants!(SO_ERROR);
-
     check_constants!(SO_TYPE);
     check_constants_manually!("SOCK_CLOEXEC", sys::O_CLOEXEC, libc::SOCK_CLOEXEC);
     check_constants!(INET_ADDRSTRLEN);
-
-    // check_constants!(IFF_UP);
-    // check_constants!(IFF_BROADCAST);
-    // check_constants!(IFF_DEBUG);
-    // check_constants!(IFF_LOOPBACK);
-    // check_constants!(IFF_POINTOPOINT);
-    // check_constants!(IFF_NOTRAILERS);
-    // check_constants!(IFF_RUNNING);
-    // check_constants!(IFF_NOARP);
-    // check_constants!(IFF_PROMISC);
-    // check_constants!(IFF_ALLMULTI);
-    // check_constants!(IFF_OACTIVE);
-    // check_constants!(IFF_SIMPLEX);
-    // check_constants!(IFF_LINK0);
-    // check_constants!(IFF_LINK1);
-    // check_constants!(IFF_LINK2);
-    // check_constants!(IFF_ALTPHYS);
-    // check_constants!(IFF_MULTICAST);
-
     check_constants!(TCP_NODELAY);
-    // check_constants!(TCP_MAXSEG);
-
-    // check_constants!(TCP_NOPUSH);
-    // check_constants!(TCP_NOOPT);
     check_constants!(TCP_KEEPIDLE);
     check_constants!(TCP_KEEPINTVL);
     check_constants!(TCP_KEEPCNT);
-
     check_constants!(IP_TOS);
-
     check_constants!(IP_TTL);
-
     check_constants!(IP_MULTICAST_IF);
     check_constants!(IP_MULTICAST_TTL);
     check_constants!(IP_MULTICAST_LOOP);
-
     check_constants!(IP_ADD_MEMBERSHIP);
-
     check_constants!(IP_DROP_MEMBERSHIP);
-
     check_constants!(IPV6_UNICAST_HOPS);
     check_constants!(IPV6_MULTICAST_IF);
     check_constants!(IPV6_MULTICAST_HOPS);
@@ -436,36 +337,23 @@ fn main() {
     check_constants!(IPV6_LEAVE_GROUP);
     check_constants!(IPV6_ADD_MEMBERSHIP);
     check_constants!(IPV6_DROP_MEMBERSHIP);
-
     check_constants!(HOST_NOT_FOUND);
     check_constants!(NO_DATA);
-    // check_constants!(NO_ADDRESS);
     check_constants!(NO_RECOVERY);
     check_constants!(TRY_AGAIN);
-
     check_constants!(AI_PASSIVE);
     check_constants!(AI_CANONNAME);
     check_constants!(AI_NUMERICHOST);
     check_constants!(AI_NUMERICSERV);
     check_constants!(AI_ADDRCONFIG);
-
     check_constants!(NI_MAXHOST);
     check_constants!(NI_MAXSERV);
-    // check_constants!(NI_NOFQDN);
-    // check_constants!(NI_NUMERICHOST);
-    // check_constants!(NI_NAMEREQD);
     check_constants!(NI_NUMERICSERV);
     check_constants!(NI_DGRAM);
-
     check_constants!(EAI_FAMILY);
     check_constants!(EAI_MEMORY);
     check_constants!(EAI_NONAME);
     check_constants!(EAI_SOCKTYPE);
-
     check_constants!(EXIT_SUCCESS);
     check_constants!(EXIT_FAILURE);
-
-    // check_constants!(PRIO_PROCESS);
-    // check_constants!(PRIO_PGRP);
-    // check_constants!(PRIO_USER);
 }
