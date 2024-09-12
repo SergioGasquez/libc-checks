@@ -6,6 +6,8 @@ on:
       - "**/README.md"
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: "50 7 * * *"
 
 env:
   CARGO_TERM_COLOR: always
@@ -13,7 +15,7 @@ env:
 
 jobs:
   rust-checks:
-    name: Rust Checks
+    name: Rust checks
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -43,3 +45,10 @@ jobs:
         uses: Swatinem/rust-cache@v2
       - name: Run command
         run: cargo ${{ matrix.action.command }} ${{ matrix.action.args }}
+      - name: Wokwi CI check
+        if: matrix.action.command == 'build'
+        uses: wokwi/wokwi-ci-action@v1
+        with:
+          token: ${{ secrets.WOKWI_CLI_TOKEN }}
+          timeout: 10000
+          fail_text: 'is different'
