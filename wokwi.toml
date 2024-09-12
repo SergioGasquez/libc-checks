@@ -1,0 +1,5 @@
+[wokwi]
+version = 1
+gdbServerPort = 3333
+elf = "target/riscv32imac-esp-espidf/release/libc-checks"
+firmware = "target/riscv32imac-esp-espidf/release/libc-checks"
