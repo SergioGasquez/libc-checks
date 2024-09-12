@@ -51,4 +51,4 @@ jobs:
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           timeout: 10000
-          fail_text: 'is different'
+          fail_text: 'Mismatch detected for'

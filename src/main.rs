@@ -3,7 +3,12 @@ use esp_idf_svc::sys;
 macro_rules! check_constants_manually {
     ($name:expr, $const1:expr, $const2:expr) => {
         if $const1.to_string() != $const2.to_string() {
-            log::error!("`{}`is different: {} != {}", $name, $const1, $const1);
+            log::error!(
+                "Mismatch detected for constant `{}`: `esp-idf` {} | `libc` {}",
+                $name,
+                $const1,
+                $const2
+            );
         }
     };
 }
@@ -12,7 +17,7 @@ macro_rules! check_constants {
     ($ident:ident) => {
         if sys::$ident.to_string() != libc::$ident.to_string() {
             log::error!(
-                "`{}` is different: {} != {}",
+                "Mismatch detected for constant `{}`: `esp-idf` {} | `libc` {}",
                 stringify!($ident),
                 sys::$ident,
                 libc::$ident
@@ -24,11 +29,16 @@ macro_rules! check_constants {
 macro_rules! check_types_manually {
     ($name:expr, $size1:expr, $size2:expr, $align1:expr, $align2:expr) => {
         if $size1.to_string() != $size2.to_string() {
-            log::error!("`{}` size is different: {} != {}", $name, $size1, $size2);
+            log::error!(
+                "Mismatch detected for type `{}` size: `esp-idf` {} | `libc` {}",
+                $name,
+                $size1,
+                $size2
+            );
         }
         if $align1.to_string() != $align2.to_string() {
             log::error!(
-                "`{}` alignment is different: {} != {}",
+                "Mismatch detected for type `{}` alignment: `esp-idf` {} | `libc` {}",
                 $name,
                 $align1,
                 $align2
@@ -41,7 +51,7 @@ macro_rules! check_types {
     ($ident:ident) => {
         if std::mem::size_of::<sys::$ident>() != std::mem::size_of::<libc::$ident>() {
             log::error!(
-                "`{}` size is different: {} != {}",
+                "Mismatch detected for type `{}` size: `esp-idf` {} | `libc` {}",
                 stringify!($ident),
                 std::mem::size_of::<sys::$ident>(),
                 std::mem::size_of::<libc::$ident>()
@@ -49,7 +59,7 @@ macro_rules! check_types {
         }
         if std::mem::align_of::<sys::$ident>() != std::mem::align_of::<libc::$ident>() {
             log::error!(
-                "`{}` alignment is different: {} != {}",
+                "Mismatch detected for type `{}` alignment: `esp-idf` {} | `libc` {}",
                 stringify!($ident),
                 std::mem::align_of::<sys::$ident>(),
                 std::mem::align_of::<libc::$ident>()
